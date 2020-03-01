@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pandas as pd
 import janitor
 import numpy as np
@@ -69,5 +68,12 @@ for i in df.columns:
         p={e:(df[i]==e).sum()/len(df) for e in df[i].unique()}
         p_sorted={k: v for k, v in sorted(p.items(), key=lambda item: item[1],reverse=True)}
         print({x:p_sorted[x] for c,x in enumerate(p_sorted) if c<15 },'\n')
+
+#https://www.kaggle.com/kemical/kickstarter-projects/discussion/67067
+#This user hinted that there are successful project without backers
+#We will remove them
+print('0 backers and succeeded:',((df.backers==0)&(df.state=='successful')).sum())
+df[(df.backers==0)&(df.state=='successful')].country.unique()
+df=df[~((df.backers==0)&(df.state=='successful'))]
 
 
